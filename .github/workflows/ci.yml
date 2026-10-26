@@ -1,11 +1,12 @@
 name: CI — Build, Test & Docker
 
-# Se dispara en cada push o PR hacia main
+# Se dispara en cada push o PR hacia main o master, o manualmente desde la interfaz de GitHub
 on:
   push:
-    branches: [ main ]
+    branches: [ main, master ]
   pull_request:
-    branches: [ main ]
+    branches: [ main, master ]
+  workflow_dispatch:
 
 jobs:
 
@@ -42,7 +43,7 @@ jobs:
     name: Build & Push imagen Docker
     needs: test                        # Solo corre si los tests pasan
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    if: (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master') && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
 
     permissions:
       contents: read
