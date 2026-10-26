@@ -12,6 +12,7 @@ api:
 # ═══════════════════════════════════════════════════════════
 server:
   port: 8080
+  address: 0.0.0.0
 
 # ═══════════════════════════════════════════════════════════
 # CONFIGURACIÓN DE SPRING
@@ -22,9 +23,9 @@ spring:
 
   # ── BASE DE DATOS Y POOL (PostgreSQL / HikariCP) ─────────
   datasource:
-    url: jdbc:postgresql://localhost:5432/curso_springboot
-    username: devdb
-    password: a1b2c3d4
+    url: ${DB_URL:jdbc:postgresql://localhost:5433/curso_springboot}
+    username: ${DB_USERNAME:devdb}
+    password: ${DB_PASSWORD:a1b2c3d4}
     driver-class-name: org.postgresql.Driver
     hikari:
       minimum-idle: 2
@@ -41,7 +42,7 @@ spring:
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: ${JPA_DDL:create-drop}
     show-sql: true
     properties:
       hibernate:
